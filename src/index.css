@@ -2,6 +2,10 @@
   box-sizing: inherit;
 }
 
+:root{
+  --primary: hsl(0, 82.5%, 49.4%);
+}
+
 html{
   box-sizing: border-box;
   height: 100%;
