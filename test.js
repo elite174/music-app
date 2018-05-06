@@ -1,20 +1,30 @@
-function f() {
-    let value = 0
-    let f = () => { }
+import { types, flow } from 'mobx-state-tree'
 
+const A = types.model({
+    a: types.number
+}).actions(self => {
     return {
-        setValue(v) {
-            value = v
-            f()
-        },
-        getValue() {
-            return value
+        setA: flow(function* (number) {
+            yield new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    self.a = 5
+                    resolve()
+                }, 5000)
+            })
+        })
+    }
+})
+
+const B = types.model({
+    b: types.array(A)
+}).actions(self => {
+    return {
+        setB() {
+            self.b = [A.create({ a: 1 })]
         }
     }
-}
+})
 
-let a = f()
-a.value
-console.log(a.getValue())
-a.setValue(2)
-console.log(a.getValue())
+let b = B.create({ b: [A.create({ a: 1 })] })
+b.b[0].setA()
+b.setB()

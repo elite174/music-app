@@ -1,4 +1,4 @@
-import { types, flow, getParent, getRoot, getSnapshot } from 'mobx-state-tree'
+import { types, flow, getParent, getRoot, getSnapshot, destroy } from 'mobx-state-tree'
 
 
 const Album = types.model('Album', {
@@ -61,10 +61,6 @@ const StoreModel = types.model('StoreModel', {
                 name: name
             }))
         },
-        getArtists: flow(function* () {
-            let response = yield fetch('ya.ru')
-            console.log(response)
-        })
     }
 })
 

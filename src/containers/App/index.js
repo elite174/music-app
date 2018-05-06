@@ -1,36 +1,33 @@
 import React from 'react'
-import GridView from '../GridView';
-import InfoView from '../InfoView';
-import SearchView from '../SearchView';
-import TableView from '../TableView';
-import Menu from '../../components/Menu';
+import SearchPage from '../../components/SearchPage';
+import ArtistPage from '../../components/ArtistPage';
 
 export default class App extends React.Component {
     /**
      * page: grid, info, table, search
      */
-    state = { page: 'grid' }
+    state = {
+        page: 'search',
+        artistId: null,
+        name: null,
+        genre: null
+    }
+    changePage = (page, name, genre, id) => {
+        this.setState({
+            page: page,
+            artistId: id,
+            name, genre
+        })
+    }
     render() {
         let content
-        switch (this.state.page) {
-            case 'grid':
-                content = <GridView />
-                break
-            case 'info':
-                content = <InfoView />
-                break
-            case 'table':
-                content = <TableView />
-                break
-            case 'search':
-                content = <SearchView />
-                break
-            default:
-                content = <GridView />
+        if (this.state.page === 'search') {
+            content = <SearchPage changePage={this.changePage} />
+        } else if (this.state.page === 'artist') {
+            content = <ArtistPage artistId={this.state.artistId} name={this.state.name} genre={this.state.genre} />
         }
-        return (<React.Fragment>
-            <Menu />
+        return <React.Fragment>
             {content}
-        </React.Fragment>)
+        </React.Fragment>
     }
 }
