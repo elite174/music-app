@@ -4,8 +4,13 @@ import './style.css'
 
 const ArtistRow = ({ name, genre, changePage, id }) => {
     return <div className='artist-row' onClick={() => changePage('artist', name, genre, id)}>
-        <p>{name}</p>
-        <p>{genre}</p>
+        <div>
+            <div className='artist-row__name'>{name}</div>
+            <div className='artist-row__genre'>{genre}</div>
+        </div>
+        <div>
+            <i className='material-icons artist-row__arrow'>arrow_forward_ios</i>
+        </div>
     </div>
 }
 
@@ -36,6 +41,7 @@ export default class SearchPage extends React.Component {
             <div className='search-page'>
                 <div className='search-bar'>
                     <input type='text' value={this.state.value}
+                        placeholder='Search for artists...'
                         onChange={e => {
                             this.setState({ value: e.target.value })
                         }}
@@ -46,6 +52,13 @@ export default class SearchPage extends React.Component {
                         }} /><i className="material-icons search-icon">search</i>
 
                 </div>
+                {this.state.artists.length > 0 &&
+                    <div className='search-text'>
+                        <span>Found</span>
+                        <span>{this.state.artists.length}</span>
+                        <span>artists</span>
+                    </div>
+                }
                 <div className='search-artists'>
                     {this.state.artists.map(artist => {
                         return <ArtistRow key={artist.id} id={artist.id}

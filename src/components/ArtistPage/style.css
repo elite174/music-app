@@ -1,0 +1,60 @@
+.album {
+    width: 180px;
+    height: 180px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    flex-shrink: 0;
+    margin: 30px;
+    box-shadow: 0 3px 10px rgba(84, 84, 84, 0.747);
+    position: relative;
+    cursor: pointer;
+    transition-duration: 250ms;
+    transition-property: transform;
+}
+.album:hover{
+    transform: scale(1.1);
+}
+.album-info{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: rgba(0,0,0,0.4);
+    color: white;
+    overflow: hidden;
+}
+.album-info>p{
+    margin:0;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.artist-albums{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.artist-page__info{
+    position: relative;
+    background-color: rgba(0,0,0,0.8);
+    width: 100%;
+    z-index: 2;
+    color: white;
+    height: 90px;
+    padding: 10px;
+}
+
+.artist-page__info__name{
+    margin-bottom:10px;
+    font-size: 26px;
+}
+
+.artist-page{
+    width: 100%;
+    height:100%;
+    overflow-y: scroll;
+}

@@ -7,20 +7,21 @@
 
 .search-bar {
     display: block;
-    height: 90px;
+    height: fit-content;
     flex-shrink: 0;
     padding: 30px;
     width: 100%;
-    border: 1px solid black;
     position: relative;
 }
 
 .search-bar>input {
-    width: 100%;
-    height: 100%;
     font-size: 22px;
     outline: none;
-    padding-left: 24px;
+    padding-left: 40px;
+    width: 100%;
+    height: 40px;
+    border-radius: 6px;
+    border: 1px solid rgba(99, 85, 85, 0.687);
 }
 
 .search-artists {
@@ -29,23 +30,94 @@
     display: flex;
     flex-grow: 0;
     flex-direction: column;
-    padding: 60px 120px;
+    padding: 30px 120px;
     overflow-y: scroll;
-    align-items:center;
+    align-items: center;
 }
 
 .artist-row {
-    border: 1px solid black;
+    border: 1px solid rgba(99, 85, 85, 0.687);
     width: 100%;
+    margin-bottom: 30px;
+    border-radius: 6px;
+    padding: 10px;
+    transition-property: border-color, box-shadow;
+    transition-duration: 250ms;
+    box-shadow: 0px 0px 0 var(--primary);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .artist-row:hover {
-    border-color: green;
-    background-color: rgba(212, 237, 227, 0.3);
+    border-color: var(--primary);
     cursor: pointer;
+    box-shadow: 3px 3px 0 var(--primary);
 }
-.search-icon{
+
+.artist-row:hover .artist-row__name {
+    color: var(--primary);
+}
+
+.artist-row:hover .artist-row__arrow {
+    color: var(--primary);
+}
+
+.search-icon {
     position: absolute;
-    top: 32px;
-    left: 32px;
+    top: 35px;
+    left: 38px;
+    font-size: 30px;
+}
+
+.artist-row__name {
+    font-size: 24px;
+    margin-bottom: 10px;
+    transition-property: color;
+    transition-duration: 250ms;
+}
+
+.artist-row__genre {
+    color: rgba(99, 85, 85, 0.687);
+    font-size: 16px;
+}
+
+.artist-row__arrow {
+    transition-property: color;
+    transition-duration: 250ms;
+}
+
+.search-text {
+    padding: 10px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.search-text>span {
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.search-text>span:first-child {
+    margin-left: 30px;
+    margin-right: 10px;
+    color: initial;
+    font-weight: initial;
+}
+
+.search-text>span:last-child {
+    margin-left: 10px;
+    margin-right: 30px;
+    color: initial;
+    font-weight: initial;
+}
+
+.search-text::before, .search-text::after {
+    display: block;
+    content: " ";
+    width: 300px;
+    border-top: 1px solid rgba(99, 85, 85, 0.3);
 }
