@@ -1,9 +1,8 @@
 import React from 'react'
 import './style.css'
-
-
-const ArtistRow = ({ name, genre, changePage, id }) => {
-    return <div className='artist-row' onClick={() => changePage('artist', name, genre, id)}>
+import { withRouter } from 'react-router'
+const ArtistRow = ({ name, genre, id, history }) => {
+    return <div className='artist-row' onClick={() => history.push(`/albums?artistID=${id}`)}>
         <div>
             <div className='artist-row__name'>{name}</div>
             <div className='artist-row__genre'>{genre}</div>
@@ -14,17 +13,30 @@ const ArtistRow = ({ name, genre, changePage, id }) => {
     </div>
 }
 
-export default class SearchPage extends React.Component {
-
-    state = {
-        value: '',
-        artists: []
+const SearchPage = withRouter(class SearchPage extends React.Component {
+    constructor(props) {
+        super(props)
+        if (props.location.search !== '' && props.location.search.indexOf('?artist=') === 0) {
+            this.state = {
+                value: decodeURIComponent(props.location.search.slice(8)),
+                artists: []
+            }
+        } else {
+            this.state = {
+                value: '',
+                artists: []
+            }
+        }
+    }
+    componentDidMount() {
+        if (this.state.value) {
+            this.fetchArtists()
+        }
     }
     async fetchArtists() {
         let response = await fetch(`https://itunes.apple.com/search?term=${this.state.value}&media=music&entity=musicArtist`)
         if (response.status === 200) {
             let data = await response.json()
-            console.log(data)
             let artists = []
             data.results.map(item => {
                 artists.push({
@@ -47,6 +59,7 @@ export default class SearchPage extends React.Component {
                         }}
                         onKeyDown={e => {
                             if (e.key === 'Enter' || e.keyCode === 13) {
+                                this.props.history.push(`/search?artist=${encodeURIComponent(this.state.value)}`)
                                 this.fetchArtists()
                             }
                         }} /><i className="material-icons search-icon">search</i>
@@ -63,11 +76,13 @@ export default class SearchPage extends React.Component {
                     {this.state.artists.map(artist => {
                         return <ArtistRow key={artist.id} id={artist.id}
                             name={artist.artistName} genre={artist.genre}
-                            changePage={this.props.changePage} />
+                            history={this.props.history} />
                     })}
                     {this.state.artists.length === 0 && <p>There are no artists</p>}
                 </div>
             </div>
         )
     }
-}
+})
+
+export default SearchPage
