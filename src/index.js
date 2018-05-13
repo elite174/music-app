@@ -2,9 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './containers/App';
-import store from './store';
-import { Provider } from 'mobx-react'
-
-ReactDOM.render(<Provider store={store}>
-    <App />
-</Provider>, document.getElementById('root'));
+import { HashRouter } from 'react-router-dom'
+ReactDOM.render(
+    <HashRouter>
+        <App />
+    </HashRouter>, document.getElementById('root'));

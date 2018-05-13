@@ -1,9 +1,9 @@
 import React from 'react'
 import './style.css'
+import { withRouter } from 'react-router'
 
-
-const ArtistRow = ({ name, genre, changePage, id }) => {
-    return <div className='artist-row' onClick={() => changePage('artist', name, genre, id)}>
+const ArtistRow = ({ name, genre, history, id }) => {
+    return <div className='artist-row' onClick={() => history.push(`/albums?artistID=${id}`)}>
         <div>
             <div className='artist-row__name'>{name}</div>
             <div className='artist-row__genre'>{genre}</div>
@@ -14,7 +14,7 @@ const ArtistRow = ({ name, genre, changePage, id }) => {
     </div>
 }
 
-export default class SearchPage extends React.Component {
+const SearchPage = withRouter(class SearchPage extends React.Component {
 
     state = {
         value: '',
@@ -36,7 +36,12 @@ export default class SearchPage extends React.Component {
             this.setState({ artists })
         }
     }
+    componentDidMount() {
+        let artist = decodeURIComponent(this.props.location.search.slice(8))
+        this.setState({ value: artist }, this.fetchArtists)
+    }
     render() {
+        console.log(this.props)
         return (
             <div className='search-page'>
                 <div className='search-bar'>
@@ -46,7 +51,8 @@ export default class SearchPage extends React.Component {
                             this.setState({ value: e.target.value })
                         }}
                         onKeyDown={e => {
-                            if (e.key === 'Enter' || e.keyCode === 13) {
+                            if ((e.key === 'Enter' || e.keyCode === 13) && (this.state.value !== '')) {
+                                this.props.history.push(`/search?artist=${encodeURIComponent(this.state.value)}`)
                                 this.fetchArtists()
                             }
                         }} /><i className="material-icons search-icon">search</i>
@@ -63,11 +69,13 @@ export default class SearchPage extends React.Component {
                     {this.state.artists.map(artist => {
                         return <ArtistRow key={artist.id} id={artist.id}
                             name={artist.artistName} genre={artist.genre}
-                            changePage={this.props.changePage} />
+                            history={this.props.history} />
                     })}
                     {this.state.artists.length === 0 && <p>There are no artists</p>}
                 </div>
             </div>
         )
     }
-}
+})
+
+export default SearchPage
