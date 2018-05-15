@@ -5,10 +5,10 @@ import AlbumModal from '../AlbumModal';
 
 const Album = ({ img, name, id, year, openModal }) => {
     return <div className='album' style={{ backgroundImage: `url(${img})` }}
-        onClick={() => openModal()}>
+        onClick={() => openModal(img, id)}>
         <div className='album-info'>
-            <div>{name}</div>
-            <div>{year}</div>
+            <div className='album-name'>{name}</div>
+            <div className='album-year'>{year}</div>
         </div>
     </div>
 }
@@ -19,11 +19,15 @@ const ArtistPage = withRouter(class ArtistPage extends React.Component {
         headerVisible: false,
         name: '',
         genre: '',
-        showModal: false
+        showModal: false,
+        collectionId: undefined
     }
-    openModal = () => {
-        console.log('req')
-        this.setState({ showModal: true })
+    openModal = (img, collectionId) => {
+        this.setState({
+            showModal: true,
+            img,
+            collectionId
+        })
     }
     closeModal = () => {
         this.setState({ showModal: false })
@@ -44,12 +48,14 @@ const ArtistPage = withRouter(class ArtistPage extends React.Component {
                     })
                 }
             })
+            albums.sort((a, b) => {
+                return a.year > b.year ? 1 : -1
+            })
             this.setState({
                 albums: albums,
                 name: data.results[0].artistName,
                 genre: data.results[0].primaryGenreName
             })
-
         }
     }
     onScroll = e => {
@@ -69,20 +75,21 @@ const ArtistPage = withRouter(class ArtistPage extends React.Component {
                 <div className='artist-page__info__name'>{this.state.name}</div>
                 <div className='artist-page__info__genre'>{this.state.genre}</div>
             </div>
-            {this.state.headerVisible && <div className='artist-page__info' style={{ position: 'absolute', top: 0 }}>
+            {this.state.headerVisible && <div className='artist-page__info animated' style={{ position: 'absolute', top: 0 }}>
                 <div className='artist-page__info__name'>{this.state.name}</div>
                 <div className='artist-page__info__genre'>{this.state.genre}</div>
             </div>}
             <div className='artist-albums'>
                 {this.state.albums.map(album => {
                     return <Album key={album.id}
+                        id={album.id}
                         name={album.name} img={album.img} year={album.year}
                         openModal={this.openModal} />
                 })}
             </div>
-            <div className='artist-videos'>
-            </div>
-            {this.state.showModal && <AlbumModal closeModal={this.closeModal}>
+            {this.state.showModal && <AlbumModal closeModal={this.closeModal}
+                collectionId={this.state.collectionId}
+                img={this.state.img}>
             </AlbumModal>}
         </div>
     }

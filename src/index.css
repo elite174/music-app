@@ -5,6 +5,7 @@
 
 :root {
   --primary: hsl(0, 82.5%, 49.4%);
+  --red: rgb(216, 39, 39);
 }
 
 html {
@@ -24,12 +25,10 @@ body {
   height: 100%;
 }
 
-.modal-root {
+#modal-root {
   position: absolute;
-  width: 100vw;
-  height: 100vh;
   top: 0;
   left: 0;
-  z-index: 3;
-  background-color: white;
+  width: 100%;
+  z-index: 5;
 }

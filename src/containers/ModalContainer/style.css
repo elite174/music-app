@@ -1,0 +1,29 @@
+.modal-root {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    pointer-events: initial;
+    animation-duration: 500ms;
+    animation-name: appear;
+}
+
+.modal-close-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+    transition-property: transform, color;
+    transition-duration: 500ms;
+}
+
+.modal-close-button:hover {
+    color: var(--red);
+    transform: rotate(180deg);
+}

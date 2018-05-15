@@ -1,0 +1,122 @@
+.album-modal {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 90px;
+    background-color: rgba(0, 0, 0, 0.85);
+    height: 100%;
+}
+
+.album-image-container {
+    width: 30%;
+    flex-shrink: 0;
+}
+
+.album-modal__image {
+    background-position: center center;
+    background-repeat: no-repeat;
+    width: 200px;
+    height: 200px;
+    flex-shrink: 0;
+    background-size: cover;
+}
+
+.album-modal__info {
+    padding-top: 10px;
+    color: white;
+    font-size: 20px;
+}
+
+.album-modal__info__album-name {
+    font-size: 24px;
+    color: white;
+    text-transform: capitalize;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.album-modal__info__count {
+    color: rgb(216, 39, 39);
+    font-weight: 800;
+    width: 24px;
+}
+
+.album-modal__info__tracks-count {
+    margin-bottom: 10px;
+}
+
+.album-modal__info__now-playing {
+    display: flex;
+    align-items: flex-start;
+}
+
+.album-modal__info__now-playing>i {
+    color: rgb(216, 39, 39);
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.album-modal__info__now-playing__name {
+    width: 100%;
+}
+
+.song-list {
+    width: 70%;
+    flex-shrink: 0;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.song {
+    height: 45px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: white;
+    background-color: transparent;
+    transition-property: background-color;
+    transition-duration: 250ms;
+    cursor: pointer;
+}
+
+.song:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.song:hover .song-button {
+    color: rgb(216, 39, 39);
+}
+
+.song-button {
+    width: 45px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    transition-property: color;
+    transition-duration: 250ms;
+}
+
+.song-name {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    transition-duration: 250ms;
+    transition-property: color;
+}
+
+.song-name.active {
+    color: rgb(216, 39, 39);
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1
+    }
+}
