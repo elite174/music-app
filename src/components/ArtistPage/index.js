@@ -72,10 +72,25 @@ const ArtistPage = withRouter(class ArtistPage extends React.Component {
     render() {
         return < div className='artist-page' onScroll={this.onScroll} >
             <div className='artist-page__info' ref={info => this.info = info}>
+                <i className='material-icons back-button' onClick={() => {
+                    console.log(this.props)
+                    if (this.props.history.length === 2) {
+                        this.props.history.push('/')
+                    } else {
+                        this.props.history.goBack()
+                    }
+                }}>arrow_back_ios</i>
                 <div className='artist-page__info__name'>{this.state.name}</div>
                 <div className='artist-page__info__genre'>{this.state.genre}</div>
             </div>
             {this.state.headerVisible && <div className='artist-page__info animated' style={{ position: 'absolute', top: 0 }}>
+                <i className='material-icons back-button' onClick={() => {
+                    if (this.props.history.length === 2) {
+                        this.props.history.push('/')
+                    } else {
+                        this.props.history.goBack()
+                    }
+                }}>arrow_back_ios</i>
                 <div className='artist-page__info__name'>{this.state.name}</div>
                 <div className='artist-page__info__genre'>{this.state.genre}</div>
             </div>}
@@ -86,6 +101,7 @@ const ArtistPage = withRouter(class ArtistPage extends React.Component {
                         name={album.name} img={album.img} year={album.year}
                         openModal={this.openModal} />
                 })}
+                {this.state.albums.length===0 && <p>There are no albums</p>}
             </div>
             {this.state.showModal && <AlbumModal closeModal={this.closeModal}
                 collectionId={this.state.collectionId}
